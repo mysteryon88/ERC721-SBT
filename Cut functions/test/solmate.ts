@@ -1,13 +1,13 @@
 import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { SBT } from "../typechain-types";
+import { Soulbound } from "../typechain-types";
 
-describe("SBT OpenZeppelin", function () {
+describe("SBT Solmate", function () {
   async function deployOneYearLockFixture() {
     const [owner, otherAccount] = await ethers.getSigners();
 
-    const SBT = await ethers.getContractFactory("SBT");
+    const SBT = await ethers.getContractFactory("Soulbound");
     const sbt = await SBT.deploy();
 
     return { sbt, owner, otherAccount };
@@ -16,12 +16,14 @@ describe("SBT OpenZeppelin", function () {
   describe("Deployment", function () {
     it("Right name and symbol", async function () {
       const { sbt } = await loadFixture(deployOneYearLockFixture);
+
       expect(await sbt.name()).to.equal("Soulbound Token");
       expect(await sbt.symbol()).to.equal("SBT");
     });
 
     it("Right owner", async function () {
       const { sbt, owner } = await loadFixture(deployOneYearLockFixture);
+
       expect(await sbt.owner()).to.equal(owner.address);
     });
   });
@@ -51,14 +53,14 @@ describe("SBT OpenZeppelin", function () {
           owner.address,
           otherAccount.address,
           0,
-          "0x00"
+          "0x"
         )
       ).to.be.revertedWith("Token is not transferable");
     });
   });
 });
 
-async function mintNFT(sbt: SBT, owner: string, tokenURI: string) {
+async function mintNFT(sbt: Soulbound, owner: string, tokenURI: string) {
   try {
     if (!sbt || !owner || !owner) {
       throw new Error(
