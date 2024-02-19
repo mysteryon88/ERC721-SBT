@@ -14,4 +14,8 @@ contract Soulbound is ERC721, Owned {
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
+
+    function baseURI() internal pure returns (string memory) {
+        return super._baseURI();
+    }
 }

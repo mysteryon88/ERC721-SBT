@@ -57,7 +57,7 @@ abstract contract ERC721 {
         _tokenURIs[tokenId] = _tokenURI;
     }
 
-    function _baseURI() internal view virtual returns (string memory) {
+    function _baseURI() internal pure virtual returns (string memory) {
         return "";
     }
 
