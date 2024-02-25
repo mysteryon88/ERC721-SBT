@@ -16,8 +16,6 @@ contract SBT is ERC721, ERC721URIStorage, Ownable {
         _setTokenURI(tokenId, uri);
     }
 
-    // The following functions are overrides required by Solidity.
-
     function tokenURI(
         uint256 tokenId
     ) public view override(ERC721, ERC721URIStorage) returns (string memory) {

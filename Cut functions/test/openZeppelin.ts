@@ -7,7 +7,7 @@ describe("SBT OpenZeppelin", function () {
   async function deployFixture() {
     const [owner, otherAccount] = await ethers.getSigners();
 
-    const SBT = await ethers.getContractFactory("SBTv1");
+    const SBT = await ethers.getContractFactory("SBT");
     const sbt = await SBT.deploy();
     const receipt = await sbt.deploymentTransaction()?.wait();
     console.log("Gas used for deploy", receipt?.gasUsed);
@@ -18,12 +18,14 @@ describe("SBT OpenZeppelin", function () {
   describe("Deployment", function () {
     it("Right name and symbol", async function () {
       const { sbt } = await loadFixture(deployFixture);
-      expect(await sbt.name()).to.equal("Soulbound Token");
+
+      expect(await sbt.name()).to.equal("Soulbound Token ERC721");
       expect(await sbt.symbol()).to.equal("SBT");
     });
 
     it("Right owner", async function () {
       const { sbt, owner } = await loadFixture(deployFixture);
+
       expect(await sbt.owner()).to.equal(owner.address);
     });
   });
@@ -51,7 +53,7 @@ describe("SBT OpenZeppelin", function () {
           owner.address,
           otherAccount.address,
           0,
-          "0x00"
+          "0x"
         )
       ).to.be.revertedWith("Token is not transferable");
     });

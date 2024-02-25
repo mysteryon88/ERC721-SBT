@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const SBT = await ethers.deployContract("SBT");
+  const SBT = await ethers.deployContract("SBTv1");
 
   await SBT.waitForDeployment();
 

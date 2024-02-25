@@ -3,11 +3,11 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { mintNFT } from "./mint";
 
-describe("SBT OpenZeppelin", function () {
+describe("SBT Solmate", function () {
   async function deployFixture() {
     const [owner, otherAccount] = await ethers.getSigners();
 
-    const SBT = await ethers.getContractFactory("SBTv1");
+    const SBT = await ethers.getContractFactory("SBTv2");
     const sbt = await SBT.deploy();
     const receipt = await sbt.deploymentTransaction()?.wait();
     console.log("Gas used for deploy", receipt?.gasUsed);

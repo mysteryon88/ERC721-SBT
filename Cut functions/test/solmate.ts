@@ -1,28 +1,30 @@
 import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Soulbound } from "../typechain-types";
+import { mintNFT } from "./mint";
 
 describe("SBT Solmate", function () {
-  async function deployOneYearLockFixture() {
+  async function deployFixture() {
     const [owner, otherAccount] = await ethers.getSigners();
 
     const SBT = await ethers.getContractFactory("Soulbound");
     const sbt = await SBT.deploy();
+    const receipt = await sbt.deploymentTransaction()?.wait();
+    console.log("Gas used for deploy", receipt?.gasUsed);
 
     return { sbt, owner, otherAccount };
   }
 
   describe("Deployment", function () {
     it("Right name and symbol", async function () {
-      const { sbt } = await loadFixture(deployOneYearLockFixture);
+      const { sbt } = await loadFixture(deployFixture);
 
       expect(await sbt.name()).to.equal("Soulbound Token");
       expect(await sbt.symbol()).to.equal("SBT");
     });
 
     it("Right owner", async function () {
-      const { sbt, owner } = await loadFixture(deployOneYearLockFixture);
+      const { sbt, owner } = await loadFixture(deployFixture);
 
       expect(await sbt.owner()).to.equal(owner.address);
     });
@@ -30,9 +32,7 @@ describe("SBT Solmate", function () {
 
   describe("Transfer", function () {
     it("Revert transfer", async function () {
-      const { sbt, owner, otherAccount } = await loadFixture(
-        deployOneYearLockFixture
-      );
+      const { sbt, owner, otherAccount } = await loadFixture(deployFixture);
 
       await mintNFT(sbt, owner.address, "URI");
 
@@ -59,21 +59,3 @@ describe("SBT Solmate", function () {
     });
   });
 });
-
-async function mintNFT(sbt: Soulbound, owner: string, tokenURI: string) {
-  try {
-    if (!sbt || !owner || !owner) {
-      throw new Error(
-        "It is necessary to provide all necessary parameters: sbt, owner and owner.address"
-      );
-    }
-
-    const transactionReceipt = await sbt.safeMint(owner, tokenURI);
-
-    // console.log("The NFT has been successfully created:", transactionReceipt);
-    return transactionReceipt;
-  } catch (error) {
-    console.error("Error when creating an NFT:", error);
-    throw error;
-  }
-}
