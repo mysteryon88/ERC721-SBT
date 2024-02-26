@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.0;
 
-import "./LibString.sol";
+import {LibString} from "./LibString.sol";
 
 /// @notice Modern, minimalist, and gas efficient ERC-721 implementation.
 /// @author Solmate (https://github.com/transmissions11/solmate/blob/main/src/tokens/ERC721.sol)
@@ -80,14 +80,6 @@ abstract contract ERC721 {
     }
 
     /*//////////////////////////////////////////////////////////////
-                         ERC721 APPROVAL STORAGE
-    //////////////////////////////////////////////////////////////*/
-
-    mapping(uint256 => address) public getApproved;
-
-    mapping(address => mapping(address => bool)) public isApprovedForAll;
-
-    /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
     //////////////////////////////////////////////////////////////*/
 
@@ -100,34 +92,9 @@ abstract contract ERC721 {
                               ERC721 LOGIC
     //////////////////////////////////////////////////////////////*/
 
-    function approve(address spender, uint256 id) public virtual {
-        revert("Token is not transferable");
-    }
-
-    function setApprovalForAll(address operator, bool approved) public virtual {
-        revert("Token is not transferable");
-    }
-
-    function transferFrom(address from, address to, uint256 id) public virtual {
-        revert("Token is not transferable");
-    }
-
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 id
-    ) public virtual {
-        revert("Token is not transferable");
-    }
-
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 id,
-        bytes calldata data
-    ) public virtual {
-        revert("Token is not transferable");
-    }
+    // function transferFrom(address from, address to, uint256 id) public virtual {
+    //     revert("Token is not transferable");
+    // }
 
     /*//////////////////////////////////////////////////////////////
                               ERC165 LOGIC
@@ -162,9 +129,9 @@ abstract contract ERC721 {
         emit Transfer(address(0), to, id);
     }
 
-    function _burn(uint256 id) internal virtual {
-        revert("Token is not transferable");
-    }
+    // function _burn(uint256 id) internal virtual {
+    //     revert("Token is not transferable");
+    // }
 
     /*//////////////////////////////////////////////////////////////
                         INTERNAL SAFE MINT LOGIC
@@ -180,26 +147,6 @@ abstract contract ERC721 {
                     address(0),
                     id,
                     ""
-                ) ==
-                ERC721TokenReceiver.onERC721Received.selector,
-            "UNSAFE_RECIPIENT"
-        );
-    }
-
-    function _safeMint(
-        address to,
-        uint256 id,
-        bytes memory data
-    ) internal virtual {
-        _mint(to, id);
-
-        require(
-            to.code.length == 0 ||
-                ERC721TokenReceiver(to).onERC721Received(
-                    msg.sender,
-                    address(0),
-                    id,
-                    data
                 ) ==
                 ERC721TokenReceiver.onERC721Received.selector,
             "UNSAFE_RECIPIENT"

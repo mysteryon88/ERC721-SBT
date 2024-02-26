@@ -30,32 +30,34 @@ describe("SBT Solmate", function () {
     });
   });
 
+  // update contract and delete all transfers
+
   describe("Transfer", function () {
     it("Revert transfer", async function () {
       const { sbt, owner, otherAccount } = await loadFixture(deployFixture);
 
       await mintNFT(sbt, owner.address, "URI");
 
-      await expect(
-        sbt.transferFrom(owner.address, otherAccount.address, 0)
-      ).to.be.revertedWith("Token is not transferable");
+      // await expect(
+      //   sbt.transferFrom(owner.address, otherAccount.address, 0)
+      // ).to.be.revertedWith("Token is not transferable");
 
-      await expect(
-        sbt["safeTransferFrom(address,address,uint256)"](
-          owner.address,
-          otherAccount.address,
-          0
-        )
-      ).to.be.revertedWith("Token is not transferable");
+      // await expect(
+      //   sbt["safeTransferFrom(address,address,uint256)"](
+      //     owner.address,
+      //     otherAccount.address,
+      //     0
+      //   )
+      // ).to.be.revertedWith("Token is not transferable");
 
-      await expect(
-        sbt["safeTransferFrom(address,address,uint256,bytes)"](
-          owner.address,
-          otherAccount.address,
-          0,
-          "0x"
-        )
-      ).to.be.revertedWith("Token is not transferable");
+      // await expect(
+      //   sbt["safeTransferFrom(address,address,uint256,bytes)"](
+      //     owner.address,
+      //     otherAccount.address,
+      //     0,
+      //     "0x"
+      //   )
+      // ).to.be.revertedWith("Token is not transferable");
     });
   });
 });
