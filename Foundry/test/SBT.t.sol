@@ -11,6 +11,10 @@ contract SoulboundTest is Test {
         sbt = new Soulbound();
     }
 
+    function test_Deploy() public {
+        new Soulbound();
+    }
+
     function test_Deployed() public {
         assertEq(sbt.name(), "Soulbound Token");
         assertEq(sbt.symbol(), "SBT");
