@@ -18,18 +18,6 @@ abstract contract ERC721 {
         uint256 indexed id
     );
 
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 indexed id
-    );
-
-    event ApprovalForAll(
-        address indexed owner,
-        address indexed operator,
-        bool approved
-    );
-
     /*//////////////////////////////////////////////////////////////
                          METADATA STORAGE/LOGIC
     //////////////////////////////////////////////////////////////*/
