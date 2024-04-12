@@ -1,7 +1,7 @@
 import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { mintNFT } from "./mint";
+import { mintNFT } from "./mint.test";
 
 describe("SBT OpenZeppelin", function () {
   async function deployFixture() {
