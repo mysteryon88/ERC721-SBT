@@ -1,13 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.0;
 
-import {LibString} from "./LibString.sol";
-
 /// @notice Modern, minimalist, and gas efficient ERC-721 implementation.
 /// @author Solmate (https://github.com/transmissions11/solmate/blob/main/src/tokens/ERC721.sol)
 abstract contract ERC721 {
-    using LibString for uint256;
-
     /*//////////////////////////////////////////////////////////////
                                  EVENTS
     //////////////////////////////////////////////////////////////*/
